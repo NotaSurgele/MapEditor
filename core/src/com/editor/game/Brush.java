@@ -78,7 +78,9 @@ public class Brush {
 
             for (float i = fixedStartX; i <= fixedEndX; i += size) {
                 for (float j = fixedStartY; j >= fixedEndY; j -= size) {
-                    drawSprite(i, j);
+                    if ((i >= 0f && i <= width * size) && (j >= 0f && j <= height * size)) {
+                        drawSprite(i, j);
+                    }
                 }
             }
         }
@@ -135,7 +137,7 @@ public class Brush {
             String[] datas = lines[i].split(":");
 
             buttons.add(new BrushButton(datas[0], Integer.parseInt(datas[1]), size, x, y));
-            x += size;
+            x += size + 10f;
             if (x % 10 == 0) {
                 y += size;
                 x = 0f;
