@@ -26,7 +26,12 @@ public class Brush {
 
     float startX = 0f;
     float startY = 0f;
+
+    static float eraserX = 0f;
+    static float eraserY = 0f;
+
     public static boolean isRectangle = false;
+    public static boolean eraser = false;
 
     private boolean onButton = false;
 
@@ -51,17 +56,33 @@ public class Brush {
         for (int index = 0; index != bounds; index++) {
             Sprite s = sprites.get(index);
 
-            if (s.getX() == i && s.getY() == j) {
-                sprites.remove(index);
-                sprites.add(newTile);
-            }
+            if (s.getX() == i && s.getY() == j)
+                return;
         }
         sprites.add(newTile);
         bounds++;
     }
 
-    public static void eraser() {
+    public void eraser(OrthographicCamera camera) {
+        if (eraser) {
+            float endX = camera.unproject(new Vector3(Gdx.input.getX(), 0, 0)).x;
+            float endY = camera.unproject(new Vector3(0, Gdx.input.getY(), 0)).y;
 
+            float fixedStartX = eraserX - (eraserX % size);
+            float fixedStartY = eraserY - (eraserY % size);
+            float fixedEndX = endX + (endX % size);
+            float fixedEndY = endY + (endY % size);
+
+            for (int i = 0; i < bounds; i++) {
+                Sprite s = sprites.get(i);
+
+                if ((s.getX() >= fixedStartX && s.getX() <= fixedEndX) &&
+                        (s.getY() >= fixedStartY && s.getY() <= fixedEndY)) {
+                    sprites.remove(i);
+                    bounds--;
+                }
+            }
+        }
     }
 
     private void rectangle(OrthographicCamera camera) {
@@ -92,29 +113,6 @@ public class Brush {
 
     public void update(OrthographicCamera camera, SpriteBatch batch) {
 
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && !onButton) {
-            float x = camera.unproject(new Vector3(Gdx.input.getX(), 0, 0)).x;
-            float y = camera.unproject(new Vector3(0, Gdx.input.getY(), 0)).y;
-
-            if ((x >= 0f && x <= width * size) && (y >= 0f && y <= height * size)) {
-                float fixedX = x - (x % size);
-                float fixedY = y - (y % size);
-
-                Sprite newTile = new Sprite(tile);
-                newTile.setBounds(fixedX, fixedY, size, size);
-
-                for (int i = 0; i != bounds; i++) {
-                    Sprite s = sprites.get(i);
-
-                    if (fixedX == s.getX() && fixedY == s.getY()) {
-                        sprites.remove(i);
-                        sprites.add(newTile);
-                    }
-                }
-                sprites.add(newTile);
-                bounds++;
-            }
-        }
         rectangle(camera);
         for (int i = 0; i != bounds; i++)
             sprites.get(i).draw(batch);
@@ -129,6 +127,29 @@ public class Brush {
                 onButton = false;
             buttons.get(i).render(batch, camera);
         }
+        eraser(camera);
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && !onButton) {
+            float x = camera.unproject(new Vector3(Gdx.input.getX(), 0, 0)).x;
+            float y = camera.unproject(new Vector3(0, Gdx.input.getY(), 0)).y;
+
+            if ((x >= 0f && x <= width * size) && (y >= 0f && y <= height * size)) {
+                float fixedX = x - (x % size);
+                float fixedY = y - (y % size);
+
+                Sprite newTile = new Sprite(tile);
+                newTile.setBounds(fixedX, fixedY, size, size);
+
+                for (int i = 0; i != bounds; i++) {
+                    Sprite s = sprites.get(i);
+
+                    if (fixedX == s.getX() && fixedY == s.getY())
+                        return;
+                }
+                sprites.add(newTile);
+                bounds++;
+            }
+        }
+
     }
 
     private void processData(String data) {

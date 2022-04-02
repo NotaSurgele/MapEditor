@@ -53,7 +53,7 @@ public class MapEditor extends ApplicationAdapter {
 				camera.position.set(new Vector2(camera.position.x, camera.position.y - (speed * camera.zoom) * Gdx.graphics.getDeltaTime()), 0);
 		}
 
-		isLock = (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) ? !isLock : isLock;
+		isLock = Gdx.input.isKeyJustPressed(Input.Keys.SPACE) != isLock;
 		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
