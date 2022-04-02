@@ -44,13 +44,13 @@ public class MapEditor extends ApplicationAdapter {
 			float y = Gdx.input.getY();
 
 			if (x >= (Gdx.graphics.getWidth() - offset))
-				camera.position.set(new Vector2(camera.position.x + speed * Gdx.graphics.getDeltaTime(), camera.position.y), 0);
+				camera.position.set(new Vector2(camera.position.x + (speed * camera.zoom) * Gdx.graphics.getDeltaTime(), camera.position.y), 0);
 			if (x <= offset)
-				camera.position.set(new Vector2(camera.position.x - speed * Gdx.graphics.getDeltaTime(), camera.position.y), 0);
+				camera.position.set(new Vector2(camera.position.x - (speed * camera.zoom) * Gdx.graphics.getDeltaTime(), camera.position.y), 0);
 			if (y <= offset)
-				camera.position.set(new Vector2(camera.position.x, camera.position.y + speed * Gdx.graphics.getDeltaTime()), 0);
+				camera.position.set(new Vector2(camera.position.x, camera.position.y + (speed * camera.zoom) * Gdx.graphics.getDeltaTime()), 0);
 			if (y >= (Gdx.graphics.getHeight() - offset))
-				camera.position.set(new Vector2(camera.position.x, camera.position.y - speed * Gdx.graphics.getDeltaTime()), 0);
+				camera.position.set(new Vector2(camera.position.x, camera.position.y - (speed * camera.zoom) * Gdx.graphics.getDeltaTime()), 0);
 		}
 
 		isLock = (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) ? !isLock : isLock;
