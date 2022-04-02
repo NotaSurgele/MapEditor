@@ -11,18 +11,24 @@ public class Grid {
     int height = 0;
     int size = 0;
 
-    ShapeRenderer[][] renderer;
+    int W_LINE_SIZE = 0;
+    int H_LINE_SIZE = 0;
+
+    ShapeRenderer[] vertical;
+    ShapeRenderer[] horizontal;
 
     public Grid(int width, int height, int size) {
         this.width = width;
         this.height = height;
         this.size = size;
-        this.renderer = new ShapeRenderer[width][height];
-        for (int i = 0; i != width; i++) {
-            for (int j = 0; j != height; j++) {
-                this.renderer[i][j] = new ShapeRenderer();
-            }
-        }
+        vertical = new ShapeRenderer[width + 1];
+        horizontal = new ShapeRenderer[height + 1];
+        for (int i = 0; i <= width; i++)
+            vertical[i] = new ShapeRenderer();
+        for (int i = 0; i <= height; i++)
+            horizontal[i] = new ShapeRenderer();
+        W_LINE_SIZE = (size * width);
+        H_LINE_SIZE = (size * height);
     }
 
     public void update(SpriteBatch batch, OrthographicCamera camera) {
@@ -30,17 +36,21 @@ public class Grid {
         float y = 0;
 
         batch.end();
-        for (int i = 0; i != width; i++) {
-            for (int j = 0; j != height; j++) {
-                renderer[i][j].setProjectionMatrix(camera.combined);
-                renderer[i][j].begin(ShapeRenderer.ShapeType.Line);
-                renderer[i][j].setColor(Color.WHITE);
-                renderer[i][j].rect(x, y, this.size, this.size);
-                renderer[i][j].end();
-                x += this.size;
-            }
-            x = 0f;
-            y += this.size;
+        for (int i = 0; i <= width; i++) {
+            vertical[i].setProjectionMatrix(camera.combined);
+            vertical[i].begin(ShapeRenderer.ShapeType.Line);
+            vertical[i].setColor(Color.WHITE);
+            vertical[i].line(W_LINE_SIZE, y, 0, y);
+            vertical[i].end();
+            y += 32;
+        }
+        for (int i = 0; i <= height; i++) {
+            horizontal[i].setProjectionMatrix(camera.combined);
+            horizontal[i].begin(ShapeRenderer.ShapeType.Line);
+            horizontal[i].setColor(Color.WHITE);
+            horizontal[i].line(x, H_LINE_SIZE, x, 0);
+            horizontal[i].end();
+            x += 32;
         }
         batch.begin();
     }

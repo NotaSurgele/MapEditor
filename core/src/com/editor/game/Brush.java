@@ -78,7 +78,7 @@ public class Brush {
 
             for (float i = fixedStartX; i <= fixedEndX; i += size) {
                 for (float j = fixedStartY; j >= fixedEndY; j -= size) {
-                    if ((i >= 0f && i <= width * size) && (j >= 0f && j <= height * size)) {
+                    if ((i >= 0f && i < width * size) && (j >= 0f && j <= height * size)) {
                         drawSprite(i, j);
                     }
                 }
