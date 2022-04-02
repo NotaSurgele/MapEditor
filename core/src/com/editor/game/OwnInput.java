@@ -2,6 +2,8 @@ package com.editor.game;
 
 import com.badlogic.gdx.InputProcessor;
 
+import static com.editor.game.MapEditor.camera;
+
 public class OwnInput implements InputProcessor {
 
     @Override
@@ -42,6 +44,7 @@ public class OwnInput implements InputProcessor {
 
     @Override
     public boolean scrolled(float amountX, float amountY) {
+        camera.zoom += amountY * .2f;
         return false;
     }
 }

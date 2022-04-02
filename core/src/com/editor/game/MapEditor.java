@@ -17,7 +17,7 @@ import java.awt.*;
 
 public class MapEditor extends ApplicationAdapter {
 	SpriteBatch batch;
-	OrthographicCamera camera;
+	public static OrthographicCamera camera;
 	Grid grid;
 	Brush brush;
 

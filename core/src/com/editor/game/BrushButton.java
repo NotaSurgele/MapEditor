@@ -34,12 +34,14 @@ public class BrushButton {
     }
 
     public boolean contain(OrthographicCamera camera) {
-        Vector3 mouse = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-        return this.hitbox.contains(mouse.x, mouse.y);
+        float y = (-Gdx.input.getY() + (Gdx.graphics.getHeight() / 2f));
+        float x = (Gdx.input.getX() - (Gdx.graphics.getWidth() / 2f));
+        return this.hitbox.contains(x, y);
     }
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {
-        this.sprite.setPosition(camera.position.x - x - 250f, camera.position.y - y - 250f);
+        batch.setProjectionMatrix(camera.projection);
+        this.sprite.setPosition(x - 250f, y - 250f);
         this.hitbox.setPosition(sprite.getX(), sprite.getY());
         this.sprite.draw(batch);
     }
