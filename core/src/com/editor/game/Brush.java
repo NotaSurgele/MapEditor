@@ -143,6 +143,8 @@ public class Brush {
                 x = 0f;
             }
         }
+        this.tile = buttons.get(0).getSprite();
+        this.value = buttons.get(0).getValue();
     }
 
     public void loadPackage(String packageName) {

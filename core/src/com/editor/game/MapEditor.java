@@ -30,7 +30,7 @@ public class MapEditor extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		grid = new Grid(50, 50, 32);
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		brush = new Brush(32, 50, 50);
+		brush = new Brush(32, 32, 32);
 		brush.loadPackage("farm.package");
 		Gdx.input.setInputProcessor(new OwnInput());
 	}
