@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class Grid {
 
-    int width = 0;
-    int height = 0;
+    static int width = 0;
+    static int height = 0;
     int size = 0;
 
     int W_LINE_SIZE = 0;
@@ -18,8 +18,8 @@ public class Grid {
     ShapeRenderer[] horizontal;
 
     public Grid(int width, int height, int size) {
-        this.width = width;
-        this.height = height;
+        Grid.width = width;
+        Grid.height = height;
         this.size = size;
         vertical = new ShapeRenderer[width + 1];
         horizontal = new ShapeRenderer[height + 1];

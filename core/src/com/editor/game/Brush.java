@@ -125,7 +125,6 @@ public class Brush {
                 onButton = true;
             } else
                 onButton = false;
-            buttons.get(i).render(batch, camera);
         }
         eraser(camera);
         if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && !onButton) {

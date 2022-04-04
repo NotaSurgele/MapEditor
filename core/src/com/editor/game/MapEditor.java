@@ -17,10 +17,11 @@ import java.awt.*;
 
 public class MapEditor extends ApplicationAdapter {
 	SpriteBatch batch;
-	public static OrthographicCamera camera;
 	Grid grid;
 	Brush brush;
+	Panel panel;
 
+	public static OrthographicCamera camera;
 	boolean isLock = true;
 	final float speed = 500f;
 	final float offset = 100f;
@@ -30,8 +31,9 @@ public class MapEditor extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		grid = new Grid(50, 50, 32);
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		brush = new Brush(32, 50, 50);
+		brush = new Brush(32, Grid.width, Grid.height);
 		brush.loadPackage("farm.package");
+		panel = new Panel();
 		Gdx.input.setInputProcessor(new OwnInput());
 	}
 
@@ -54,12 +56,13 @@ public class MapEditor extends ApplicationAdapter {
 		}
 
 		isLock = Gdx.input.isKeyJustPressed(Input.Keys.SPACE) != isLock;
-		batch.setProjectionMatrix(camera.combined);
 
+		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		camera.update();
-		brush.update(camera, batch);
 		grid.update(batch, camera);
+		brush.update(camera, batch);
+		panel.update(batch, brush.buttons);
 		batch.end();
 	}
 	

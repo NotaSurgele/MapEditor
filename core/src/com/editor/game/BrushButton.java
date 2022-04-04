@@ -41,7 +41,7 @@ public class BrushButton {
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {
         batch.setProjectionMatrix(camera.projection);
-        this.sprite.setPosition(x - 250f, y - 250f);
+        this.sprite.setPosition(x - 250f, Panel.actualPosition.y + 250f);
         this.hitbox.setPosition(sprite.getX(), sprite.getY());
         this.sprite.draw(batch);
     }

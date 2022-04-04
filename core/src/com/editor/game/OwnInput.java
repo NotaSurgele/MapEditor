@@ -1,6 +1,7 @@
 package com.editor.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector3;
 
@@ -10,6 +11,19 @@ public class OwnInput implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
+        if (keycode == 45) {
+
+            switch (Panel.state) {
+                case CLOSE:
+                    Panel.state = Panel.State.OPEN;
+                    break;
+                case OPEN:
+                    Panel.state = Panel.State.CLOSE;
+                    break;
+                default:
+                    break;
+            }
+        }
         return false;
     }
 
