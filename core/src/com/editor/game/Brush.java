@@ -18,8 +18,7 @@ public class Brush {
 
     ArrayList<Sprite> sprites;
     ArrayList<BrushButton> buttons;
-    ArrayList<int[][]> layers;
-    int[][] layer;
+    Layer layer;
 
     int size;
     int width;
@@ -45,30 +44,10 @@ public class Brush {
         this.size = size;
         this.sprites = new ArrayList<>();
         this.buttons = new ArrayList<>();
-        this.layers = new ArrayList<>();
-        this.layer = new int[width][height];
-        initLayer();
+        layer = new Layer(width, height);
         this.width = width;
         this.height = height;
         this.tile = new Sprite();
-    }
-
-    private void initLayer()
-    {
-        for (int i = 0; i != width; i++) {
-            for (int j = 0; j != height; j++)
-                this.layer[i][j] = 0;
-        }
-    }
-
-    private void displayLayer()
-    {
-        for (int i = 0; i != width; i++) {
-            for (int j = 0; j != height; j++)
-                System.out.print(layer[i][j]);
-            System.out.println();
-        }
-        System.out.println("________________________________________________");
     }
 
     private void drawSprite(float i, float j) {
@@ -81,7 +60,7 @@ public class Brush {
             if (s.getX() == i && s.getY() == j)
                 return;
         }
-        layer[(int)i / size][(int)j / size] = value;
+        layer.setLayerValue((int) i / size, (int) j / size, value);
         sprites.add(newTile);
         bounds++;
     }
@@ -101,7 +80,7 @@ public class Brush {
 
                 if ((s.getX() >= fixedStartX && s.getX() <= fixedEndX) &&
                         (s.getY() >= fixedStartY && s.getY() <= fixedEndY)) {
-                    layer[(int)s.getX() / size][(int)s.getY() / size] = 0;
+                    layer.setLayerValue((int)s.getX() / size, (int)s.getY() / size, 0);
                     sprites.remove(i);
                     bounds--;
                 }
