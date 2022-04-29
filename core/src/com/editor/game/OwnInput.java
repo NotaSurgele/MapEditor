@@ -24,6 +24,20 @@ public class OwnInput implements InputProcessor {
                     break;
             }
         }
+
+        if (keycode == 33) {
+
+            switch (LayerPanel.state) {
+                case CLOSE:
+                    LayerPanel.state = LayerPanel.State.OPEN;
+                    break;
+                case OPEN:
+                    LayerPanel.state = LayerPanel.State.CLOSE;
+                    break;
+                default:
+                    break;
+            }
+        }
         return false;
     }
 

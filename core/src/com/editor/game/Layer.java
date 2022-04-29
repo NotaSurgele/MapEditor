@@ -5,18 +5,18 @@ import java.util.ArrayList;
 public class Layer {
 
     int[][] layer;
-    ArrayList<int[][]> layers;
     int width;
     int height;
 
     public Layer(int width, int height)
     {
-        this.layers = new ArrayList<>();
+        this.width = width;
+        this.height = height;
         this.layer = new int[width][height];
         initLayer(width, height);
     }
 
-    private void displayLayer()
+    public void displayLayer()
     {
         for (int i = 0; i != width; i++) {
             for (int j = 0; j != height; j++)
@@ -37,11 +37,6 @@ public class Layer {
     public void setLayerValue(int i, int j, int value)
     {
         this.layer[i][j] = value;
-    }
-
-    public ArrayList<int[][]> getLayers()
-    {
-        return this.layers;
     }
 
 }

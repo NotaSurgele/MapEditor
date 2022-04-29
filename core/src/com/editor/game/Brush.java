@@ -18,8 +18,9 @@ public class Brush {
 
     ArrayList<Sprite> sprites;
     ArrayList<BrushButton> buttons;
-    Layer layer;
+    ArrayList<Layer> layers;
 
+    int currentLayer = 0;
     int size;
     int width;
     int height;
@@ -44,7 +45,9 @@ public class Brush {
         this.size = size;
         this.sprites = new ArrayList<>();
         this.buttons = new ArrayList<>();
-        layer = new Layer(width, height);
+        this.layers = new ArrayList<>();
+        for (int i = 0; i != 2; i++)
+            this.layers.add(new Layer(width, height));
         this.width = width;
         this.height = height;
         this.tile = new Sprite();
@@ -54,13 +57,9 @@ public class Brush {
         Sprite newTile = new Sprite(tile);
         newTile.setBounds(i, j, size, size);
 
-        for (int index = 0; index != bounds; index++) {
-            Sprite s = sprites.get(index);
-
-            if (s.getX() == i && s.getY() == j)
-                return;
-        }
-        layer.setLayerValue((int) i / size, (int) j / size, value);
+        if (layers.get(currentLayer).layer[(int) i / size][(int) j / size] == value)
+            return;
+        layers.get(currentLayer).setLayerValue((int) i / size, (int) j / size, value);
         sprites.add(newTile);
         bounds++;
     }
@@ -80,7 +79,7 @@ public class Brush {
 
                 if ((s.getX() >= fixedStartX && s.getX() <= fixedEndX) &&
                         (s.getY() >= fixedStartY && s.getY() <= fixedEndY)) {
-                    layer.setLayerValue((int)s.getX() / size, (int)s.getY() / size, 0);
+                    layers.get(currentLayer).setLayerValue((int)s.getX() / size, (int)s.getY() / size, 0);
                     sprites.remove(i);
                     bounds--;
                 }
@@ -117,6 +116,8 @@ public class Brush {
     public void update(OrthographicCamera camera, SpriteBatch batch) {
 
         rectangle(camera);
+        currentLayer = LayerPanel.currentLayer;
+        layers.get(currentLayer).displayLayer();
         for (int i = 0; i != bounds; i++)
             sprites.get(i).draw(batch);
         for (int i = buttons.size() - 1; i >= 0; i--) {

@@ -13,6 +13,7 @@ public class MapEditor extends ApplicationAdapter {
 	Grid grid;
 	Brush brush;
 	Panel panel;
+	LayerPanel layerPanel;
 
 	public static OrthographicCamera camera;
 	boolean isLock = true;
@@ -27,6 +28,7 @@ public class MapEditor extends ApplicationAdapter {
 		brush = new Brush(32, Grid.width, Grid.height);
 		brush.loadPackage("farm.package");
 		panel = new Panel();
+		layerPanel = new LayerPanel();
 		Gdx.input.setInputProcessor(new OwnInput());
 	}
 
@@ -55,6 +57,7 @@ public class MapEditor extends ApplicationAdapter {
 		grid.update(batch, camera);
 		brush.update(camera, batch);
 		panel.update(batch, brush.buttons);
+		layerPanel.update(batch);
 		batch.end();
 	}
 	

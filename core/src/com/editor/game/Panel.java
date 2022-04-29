@@ -14,8 +14,7 @@ public class Panel {
 
     enum State {
         OPEN,
-        CLOSE,
-        UNDEFINED
+        CLOSE
     }
 
     Vector2 openPosition;
@@ -53,7 +52,8 @@ public class Panel {
         if (this.show)
             batch.draw(t, actualPosition.x, actualPosition.y, 1280, 400);
         batch.setProjectionMatrix(camera.combined);
-        for (int i = 0; i != buttons.size(); i++)
-            buttons.get(i).render(batch, camera);
+        if (this.show)
+            for (int i = 0; i != buttons.size(); i++)
+                buttons.get(i).render(batch, camera);
     }
 }
