@@ -18,7 +18,6 @@ public class Panel {
         UNDEFINED
     }
 
-
     Vector2 openPosition;
     Vector2 closedPosition;
     public static Vector2 actualPosition;
@@ -27,10 +26,12 @@ public class Panel {
     float speed = 500f;
     public static State state = State.CLOSE;
 
+    private boolean show = false;
+
     public Panel()
     {
-        openPosition = new Vector2(-400f, -500f);
-        closedPosition = new Vector2(-400f, -800f);
+        openPosition = new Vector2(-640f, -500f);
+        closedPosition = new Vector2(-640f, -800f);
         actualPosition = closedPosition.cpy();
         t = new Texture("Panel.png");
     }
@@ -41,12 +42,16 @@ public class Panel {
         if (state == State.CLOSE) {
             if (actualPosition.y >= closedPosition.y)
                 actualPosition.y -= speed * Gdx.graphics.getDeltaTime();
+            else
+                this.show = false;
         }
         if (state == State.OPEN) {
+            this.show = true;
             if (actualPosition.y <= openPosition.y)
                 actualPosition.y += speed * Gdx.graphics.getDeltaTime();
         }
-        batch.draw(t, actualPosition.x, actualPosition.y);
+        if (this.show)
+            batch.draw(t, actualPosition.x, actualPosition.y, 1280, 400);
         batch.setProjectionMatrix(camera.combined);
         for (int i = 0; i != buttons.size(); i++)
             buttons.get(i).render(batch, camera);

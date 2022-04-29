@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Layer {
 
+    int[][] layer;
     ArrayList<int[][]> layers;
-    int [][] layer;
     int width;
     int height;
 

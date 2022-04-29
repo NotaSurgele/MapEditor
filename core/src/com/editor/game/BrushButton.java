@@ -11,8 +11,8 @@ import com.badlogic.gdx.math.Vector3;
 public class BrushButton {
 
     Sprite sprite;
-    int value;
     Rectangle hitbox;
+    int value;
     float x;
     float y;
 
@@ -41,7 +41,7 @@ public class BrushButton {
 
     public void render(SpriteBatch batch, OrthographicCamera camera) {
         batch.setProjectionMatrix(camera.projection);
-        this.sprite.setPosition(x - 250f, Panel.actualPosition.y + 250f);
+        this.sprite.setPosition(x - 550f, Panel.actualPosition.y + y + 375f);
         this.hitbox.setPosition(sprite.getX(), sprite.getY());
         this.sprite.draw(batch);
     }

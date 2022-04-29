@@ -162,12 +162,12 @@ public class Brush {
         for (int i = 0; i != end; i++) {
             String[] datas = lines[i].split(":");
 
-            buttons.add(new BrushButton(datas[0], Integer.parseInt(datas[1]), size, x, y));
-            x += size + 10f;
-            if (x % 10 == 0) {
-                y += size;
+            if (i % 10 == 0) {
+                y -= (size + 10f);
                 x = 0f;
             }
+            buttons.add(new BrushButton(datas[0], Integer.parseInt(datas[1]), size, x, y));
+            x += size + 10f;
         }
         this.tile = buttons.get(0).getSprite();
         this.value = buttons.get(0).getValue();
