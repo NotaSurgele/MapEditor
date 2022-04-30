@@ -117,7 +117,6 @@ public class Brush {
 
         rectangle(camera);
         currentLayer = LayerPanel.currentLayer;
-        layers.get(currentLayer).displayLayer();
         for (int i = 0; i != bounds; i++)
             sprites.get(i).draw(batch);
         for (int i = buttons.size() - 1; i >= 0; i--) {
@@ -142,12 +141,8 @@ public class Brush {
                 Sprite newTile = new Sprite(tile);
                 newTile.setBounds(fixedX, fixedY, size, size);
 
-                for (int i = 0; i != bounds; i++) {
-                    Sprite s = sprites.get(i);
-
-                    if (fixedX == s.getX() && fixedY == s.getY())
-                        return;
-                }
+                if (layers.get(currentLayer).layer[(int) fixedX / size][(int) fixedY / size] == value)
+                    return;
                 sprites.add(newTile);
                 bounds++;
             }
