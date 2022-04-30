@@ -16,7 +16,7 @@ public class Layer {
         initLayer(width, height);
     }
 
-    public void displayLayer()
+    public void displayLyer()
     {
         for (int i = 0; i != width; i++) {
             for (int j = 0; j != height; j++)

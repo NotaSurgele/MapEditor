@@ -57,7 +57,7 @@ public class MapEditor extends ApplicationAdapter {
 		grid.update(batch, camera);
 		brush.update(camera, batch);
 		panel.update(batch, brush.buttons);
-		layerPanel.update(batch);
+		layerPanel.update(batch, brush);
 		batch.end();
 	}
 	

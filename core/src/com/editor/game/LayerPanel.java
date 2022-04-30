@@ -19,12 +19,13 @@ public class LayerPanel {
     Vector2 closePosition;
     Texture t;
     ArrayList<LayerButton> buttons;
+    SaveButton save;
     public static int currentLayer = 0;
 
     BitmapFont selectedLayer;
     final String[] layerName = {
-            "Non Collider",
-            "Collider"
+        "Non Collider",
+        "Collider"
     };
 
 
@@ -54,11 +55,12 @@ public class LayerPanel {
         this.buttons.add(new LayerButton(new Texture("LayerButton.png"), new Vector2(-330, 500f), "Collider", 1));
         this.selectedLayer = new BitmapFont();
         this.selectedLayer.setColor(Color.RED);
+        this.save = new SaveButton();
     }
 
     public int getCurrentLayer() { return this.currentLayer; }
 
-    public void update(SpriteBatch batch)
+    public void update(SpriteBatch batch, Brush brush)
     {
         batch.setProjectionMatrix(camera.projection);
         if (state == State.CLOSE) {
@@ -75,7 +77,7 @@ public class LayerPanel {
         }
         if (this.show == true) {
             batch.draw(t, actualPosition.x, actualPosition.y, 400, 720);
-            this.selectedLayer.draw(batch, "Selected layer: " + this.layerName[this.currentLayer], LayerPanel.actualPosition.x + 50f, -200f);
+            this.selectedLayer.draw(batch, "Selected layer: " + this.layerName[this.currentLayer], LayerPanel.actualPosition.x + 100f, -300f);
         }
         this.sprite.setPosition(actualPosition.x, actualPosition.y);
         batch.setProjectionMatrix(camera.combined);
@@ -86,6 +88,9 @@ public class LayerPanel {
                     this.currentLayer = buttons.get(i).getLayerValue();
                 }
             }
+            this.save.update(batch);
+            if (this.save.isClicked())
+                this.save.setLayers(brush.layers);
         }
     }
 }
